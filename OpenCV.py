@@ -4,13 +4,13 @@ import cv2 as cv
 cap = cv.VideoCapture(0)
 # def nothing(x):
 #     pass
-# cv.namedWindow('Contours');
-# cv.createTrackbar('H', 'Contours', 10, 255, nothing)
-# cv.createTrackbar('S', 'Contours', 77, 255, nothing)
-# cv.createTrackbar('V', 'Contours', 185, 255, nothing)
-# cv.createTrackbar('X', 'Contours', 26, 255, nothing)
-# cv.createTrackbar('Y', 'Contours', 135, 255, nothing)
-# cv.createTrackbar('Z', 'Contours', 251, 255, nothing)
+# cv.namedWindow('Gold');
+# cv.createTrackbar('H', 'Gold', 10, 255, nothing)
+# cv.createTrackbar('S', 'Gold', 77, 255, nothing)
+# cv.createTrackbar('V', 'Gold', 185, 255, nothing)
+# cv.createTrackbar('X', 'Gold', 26, 255, nothing)
+# cv.createTrackbar('Y', 'Gold', 135, 255, nothing)
+# cv.createTrackbar('Z', 'Gold', 251, 255, nothing)
 
 while(True):
     ret,frame = cap.read()
@@ -24,8 +24,8 @@ while(True):
     
     lowerG = np.array([10,77,185])
     upperG = np.array([26,135,251])
-    # lowerG = np.array([cv.getTrackbarPos('H', 'Contours'),cv.getTrackbarPos('S', 'Contours'),cv.getTrackbarPos('V', 'Contours')])
-    # upperG = np.array([cv.getTrackbarPos('X', 'Contours'),cv.getTrackbarPos('Y', 'Contours'),cv.getTrackbarPos('Z', 'Contours')])
+    # lowerG = np.array([cv.getTrackbarPos('H', 'Gold'),cv.getTrackbarPos('S', 'Gold'),cv.getTrackbarPos('V', 'Gold')])
+    # upperG = np.array([cv.getTrackbarPos('X', 'Gold'),cv.getTrackbarPos('Y', 'Gold'),cv.getTrackbarPos('Z', 'Gold')])
 
     gold = cv.inRange(hsv, lowerG, upperG)
     goldBlur = cv.GaussianBlur(gold,(9,9),50)
@@ -57,7 +57,7 @@ while(True):
     print("GOLD: %s %s     %s" %(cx,cy,position))
 
 
-    cv.imshow("Gold", im)
+    cv.imshow('Gold', im)
     cv.imshow('Image',frame)
     k = cv.waitKey(30) & 0xff
     if k == 27:
