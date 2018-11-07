@@ -1,18 +1,25 @@
+import time
 import numpy as np
 import cv2 as cv
 
 cap = cv.VideoCapture(0)
-# def nothing(x):
+#def nothing(x):
 #     pass
-# cv.namedWindow('Gold');
-# cv.createTrackbar('H', 'Gold', 10, 255, nothing)
-# cv.createTrackbar('S', 'Gold', 77, 255, nothing)
-# cv.createTrackbar('V', 'Gold', 185, 255, nothing)
-# cv.createTrackbar('X', 'Gold', 26, 255, nothing)
-# cv.createTrackbar('Y', 'Gold', 135, 255, nothing)
-# cv.createTrackbar('Z', 'Gold', 251, 255, nothing)
+#cv.namedWindow('Gold');
+#cv.createTrackbar('H', 'Gold', 10, 255, nothing)
+#cv.createTrackbar('S', 'Gold', 75, 255, nothing)
+#cv.createTrackbar('V', 'Gold', 200, 255, nothing)
+#cv.createTrackbar('X', 'Gold', 25, 255, nothing)
+#cv.createTrackbar('Y', 'Gold', 135, 255, nothing)
+#cv.createTrackbar('Z', 'Gold', 255, 255, nothing)
 
-while(True):
+start = int(round(time.time() * 1000))
+end = int(round(time.time() * 1000))
+
+sum = 0
+count = 0
+
+while((end-start) < 5000):
     ret,frame = cap.read()
     
     hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
@@ -22,10 +29,10 @@ while(True):
     param1 = 2;
     param2 = 20;
     
-    lowerG = np.array([10,77,185])
-    upperG = np.array([26,135,251])
-    # lowerG = np.array([cv.getTrackbarPos('H', 'Gold'),cv.getTrackbarPos('S', 'Gold'),cv.getTrackbarPos('V', 'Gold')])
-    # upperG = np.array([cv.getTrackbarPos('X', 'Gold'),cv.getTrackbarPos('Y', 'Gold'),cv.getTrackbarPos('Z', 'Gold')])
+    lowerG = np.array([10,75,200])
+    upperG = np.array([25,135,255])
+#    lowerG = np.array([cv.getTrackbarPos('H', 'Gold'),cv.getTrackbarPos('S', 'Gold'),cv.getTrackbarPos('V', 'Gold')])
+#    upperG = np.array([cv.getTrackbarPos('X', 'Gold'),cv.getTrackbarPos('Y', 'Gold'),cv.getTrackbarPos('Z', 'Gold')])
 
     gold = cv.inRange(hsv, lowerG, upperG)
     goldBlur = cv.GaussianBlur(gold,(9,9),50)
@@ -54,8 +61,10 @@ while(True):
         position = 3
     
 
-    print("GOLD: %s %s     %s" %(cx,cy,position))
-
+#    print("GOLD: %s %s     %s" %(cx,cy,position))
+    sum += position
+    count += 1
+    end = int(round(time.time() * 1000))
 
     cv.imshow('Gold', im)
     cv.imshow('Image',frame)
@@ -65,3 +74,5 @@ while(True):
 
 cap.release()
 cv.destroyAllWindows()
+avg = round(sum/count)
+print(avg)
