@@ -12,17 +12,6 @@ def images(img1,img2):
 		if k == 27:
 			break
 
-def hist(img):
-	hist,bins = np.histogram(img.flatten(),256,[0,256])
-	cdf = hist.cumsum()
-	cdf_normalized = cdf * hist.max()/ cdf.max()
-	hist1 = plt.figure(1)
-	plt.plot(cdf_normalized, color = 'b')
-	plt.hist(img.flatten(),256,[0,256], color = 'r')
-	plt.xlim([0,256])
-	plt.legend(('cdf','histogram'), loc = 'upper left')
-	hist1.show()
-
 def balance(img):
 	lab = cv.cvtColor(img, cv.COLOR_BGR2LAB)
 	lab[:,:,1] = lab[:,:,1]-((np.average(lab[:,:,1])-128)*(lab[:,:,0]/255.0)*1.1)
