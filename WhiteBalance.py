@@ -14,8 +14,9 @@ def images(img1,img2):
 
 def balance(img):
 	lab = cv.cvtColor(img, cv.COLOR_BGR2LAB)
-	lab[:,:,1] = lab[:,:,1]-((np.average(lab[:,:,1])-128)*(lab[:,:,0]/255.0)*1.1)
-	lab[:,:,2] = lab[:,:,2]-((np.average(lab[:,:,2])-128)*(lab[:,:,0]/255.0)*1.1)
+	print (lab)
+	lab[:,:,1] = np.round(lab[:,:,1]-((np.average(lab[:,:,1])-128)*(lab[:,:,0]/255.0)))
+	lab[:,:,2] = np.round(lab[:,:,2]-((np.average(lab[:,:,2])-128)*(lab[:,:,0]/255.0)))
 	new = cv.cvtColor(lab, cv.COLOR_LAB2BGR)
 	return new
 

@@ -1,6 +1,7 @@
 import time
 import numpy as np
 import cv2 as cv
+import WhiteBalance
 
 cap = cv.VideoCapture(0)
 #def nothing(x):
@@ -21,8 +22,8 @@ count = 0
 
 while((end-start) < 5000):
     ret,frame = cap.read()
-    
-    hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
+    img = WhiteBalance.balance(frame)
+    hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
 
     dp = 2
     min_dist = 20
@@ -48,10 +49,10 @@ while((end-start) < 5000):
             cy = int(M["m01"] / M["m00"])
         else:
             cx, cy = 0, 0
-    cv.circle(frame, (cx,cy), 2, (255,0,0), thickness=80)
+    cv.circle(img, (cx,cy), 2, (255,0,0), thickness=80)
 
     
-    y,x,_ = frame.shape
+    y,x,_ = img.shape
     position = 0
     if(cx >= 0 and cx < (x/3)):
         position = 1
@@ -67,7 +68,8 @@ while((end-start) < 5000):
     end = int(round(time.time() * 1000))
 
     cv.imshow('Gold', im)
-    cv.imshow('Image',frame)
+    cv.imshow('Balanced',img)
+    cv.imshow('Normal',frame)
     k = cv.waitKey(30) & 0xff
     if k == 27:
         break
