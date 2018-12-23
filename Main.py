@@ -22,7 +22,7 @@ count = 0
 
 while((end-start) < 5000):
     ret,frame = cap.read()
-    img = WhiteBalance.balance(frame)
+    img = WhiteBalance.gray_world(frame)
     hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
 
     dp = 2
@@ -39,7 +39,7 @@ while((end-start) < 5000):
     goldBlur = cv.GaussianBlur(gold,(9,9),50)
     im,contours,_ = cv.findContours(goldBlur, mode=cv.RETR_CCOMP, method=cv.CHAIN_APPROX_NONE)
     sorted(contours, key=cv.contourArea, reverse=True)
-
+    print(len(contours))
     if not contours:
         cx,cy = 0,0
     else:
