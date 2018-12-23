@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 def display(img,img1,img2):
-	
+
 	while True:
 		images = np.concatenate((img, img1, img2), axis=0)
 		cv.imshow('images', images)
@@ -62,7 +62,7 @@ def true_white(img):
 			cy = int(M["m01"] / M["m00"])
 		else:
 			cx, cy = 0, 0
-	white = lab[cy,cx]
+	white = lab[cy,cx].copy()
 	for y in range(0,len(lab)):
 		for x in range(0,len(lab[y])):
 			lab[y][x][1] = round(lab[y][x][1] - ((white[1]-128)*(lab[y][x][0]/255.0)))
