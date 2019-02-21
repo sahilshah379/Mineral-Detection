@@ -1,11 +1,10 @@
 import cv2 as cv
 import numpy as np
-from matplotlib import pyplot as plt
 
-def display(img,img1,img2):
+def display(img):
 
 	while True:
-		images = np.concatenate((img, img1, img2), axis=0)
+		images = np.concatenate(img, axis=0)
 		cv.imshow('images', images)
 		k = cv.waitKey(30) & 0xff
 		if k == 27:
@@ -43,7 +42,7 @@ def true_white(img):
 	erode = cv.erode(gray, np.ones((5,5), np.uint8), iterations=1)
 
 	blur = cv.GaussianBlur(erode,(9,9),50)
-	im,unboundContours,_ = cv.findContours(blur, mode=cv.RETR_CCOMP, method=cv.CHAIN_APPROX_NONE)
+	unboundContours,_ = cv.findContours(blur, mode=cv.RETR_CCOMP, method=cv.CHAIN_APPROX_NONE)
 	deviation = 0.35
 	contours = []
 	for c in range(0,len(unboundContours)):
@@ -73,8 +72,8 @@ def true_white(img):
 	return new
 
 if __name__ == "__main__":
-	img = cv.imread('img.jpg', 1)
+	img = cv.imread('ftc1.jpg', 1)
 	img = img[round(img.shape[0]*.45):img.shape[0], 0:img.shape[1]]
 	img1 = gray_world(img)
 	img2 = true_white(img)
-	display(img,img1,img2)
+	display((img,img1,img2))

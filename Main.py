@@ -37,9 +37,8 @@ while((end-start) < 5000):
 
     gold = cv.inRange(hsv, lowerG, upperG)
     goldBlur = cv.GaussianBlur(gold,(9,9),50)
-    im,contours,_ = cv.findContours(goldBlur, mode=cv.RETR_CCOMP, method=cv.CHAIN_APPROX_NONE)
+    contours,_ = cv.findContours(goldBlur, mode=cv.RETR_CCOMP, method=cv.CHAIN_APPROX_NONE)
     sorted(contours, key=cv.contourArea, reverse=True)
-    print(len(contours))
     if not contours:
         cx,cy = 0,0
     else:
@@ -67,7 +66,6 @@ while((end-start) < 5000):
     count += 1
     end = int(round(time.time() * 1000))
 
-    cv.imshow('Gold', im)
     cv.imshow('Balanced',img)
     cv.imshow('Normal',frame)
     k = cv.waitKey(30) & 0xff
